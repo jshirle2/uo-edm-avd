@@ -6,18 +6,24 @@ $LogFile = "$LogPath\PSModules-install.log"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 
+
 function Log {
     param ($Message)
 
-    if (-not (test-path $LogFile)) {
-        New-Item -Path $LogPath -ItemType Directory
+    if (-not (Test-Path $LogPath)) {
+        New-Item -Path $LogPath -ItemType Directory -Force | Out-Null
     }
-    
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
     "$timestamp  $Message" | Tee-Object -FilePath $LogFile -Append
-    write-host $Message
-} 
+    Write-Host $Message
+}
+
+# Delete previous log
+if (Test-Path $LogFile) {
+    Remove-Item $LogFile -Force
+}
+
 
 # Delete previous log
 if (Test-Path $LogFile) {
