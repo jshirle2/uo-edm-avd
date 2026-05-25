@@ -19,6 +19,12 @@ if (Test-Path $LogFile) {
     Remove-Item $LogFile -Force
 }
 
+
+if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
+    Log "Installing NuGet provider because it is not already installed."
+    Install-PackageProvider -Name NuGet -Force
+}
+
 Log "Starting PowerShell module installation."
 
 
