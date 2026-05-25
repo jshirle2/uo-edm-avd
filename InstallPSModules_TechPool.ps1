@@ -27,7 +27,7 @@ if (Test-Path $LogFile) {
     Remove-Item $LogFile -Force
 }
 
-
+# Nuget is needed for install-module
 if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
     Log "Installing NuGet provider because it is not already installed."
     Install-PackageProvider -Name NuGet -Force
