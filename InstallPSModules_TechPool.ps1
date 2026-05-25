@@ -59,6 +59,6 @@ $Modules = @(
 $Modules | ForEach-Object {
     if (-not (Get-InstalledModule -Name $_ -ErrorAction SilentlyContinue)) {
         Log "Installing PowerShell module: $_"
-        Install-Module $_ -Scope AllUsers -Force -AllowClobber -Repository PSGallery -Verbose
+        Install-Module $_ -Scope AllUsers -Force -AllowClobber -Verbose
     }
 } 
