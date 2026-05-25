@@ -1,6 +1,11 @@
 $LogPath = 'C:\UO\logs'
 $LogFile = "$LogPath\PSModules-install.log"
 
+
+# Ensure TLS 1.2
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+
 function Log {
     param ($Message)
 
