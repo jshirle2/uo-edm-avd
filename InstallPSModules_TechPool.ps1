@@ -62,3 +62,6 @@ $Modules | ForEach-Object {
         Install-Module $_ -Scope AllUsers -Force -AllowClobber -Verbose
     }
 } 
+
+Log "PowerShell module installation finished successfully."
+Exit 0
