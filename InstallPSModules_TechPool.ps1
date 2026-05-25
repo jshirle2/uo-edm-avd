@@ -5,8 +5,10 @@ $LogFile = "$LogPath\PSModules-install.log"
 # Ensure TLS 1.2
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+
 # Trust PSGallery
 Set-PSRepository PSGallery -InstallationPolicy Trusted
+
 
 function Log {
     param ($Message)
@@ -19,12 +21,6 @@ function Log {
     "$timestamp  $Message" | Tee-Object -FilePath $LogFile -Append
     Write-Host $Message
 }
-
-# Delete previous log
-if (Test-Path $LogFile) {
-    Remove-Item $LogFile -Force
-}
-
 
 # Delete previous log
 if (Test-Path $LogFile) {
