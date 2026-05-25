@@ -23,6 +23,7 @@ if (Test-Path $LogFile) {
 if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
     Log "Installing NuGet provider because it is not already installed."
     Install-PackageProvider -Name NuGet -Force
+    Get-PackageProvider -Name NuGet | Out-Null
 }
 
 Log "Starting PowerShell module installation."
@@ -31,7 +32,7 @@ Log "Starting PowerShell module installation."
 $Modules = @(
     'Microsoft.Graph.Authentication',
     'Microsoft.Graph.Users',
-    'Microsoft.Graph.Groups'
+    'Microsoft.Graph.Groups',
     'Microsoft.Entra',
     'Az.Accounts',
     'Az.Compute',
@@ -48,7 +49,7 @@ $Modules = @(
 )
 
 $Modules | ForEach-Object {
-    if (-not (Get-Module $_ -ListAvailable)) {
+    if (-not (Get-InstalledModule -Name $_ -ErrorAction SilentlyContinue)) {
         Log "Installing PowerShell module: $_"
         Install-Module $_ -Scope AllUsers -Force -AllowClobber -Repository PSGallery -Verbose
     }
