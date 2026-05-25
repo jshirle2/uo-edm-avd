@@ -21,21 +21,41 @@ if (Test-Path $LogFile) {
 
 Log "Starting RSAT installation."
 
-@(
+
+$Capabilities = @(
     'Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0',
     'Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0'
-) | ForEach-Object {
+)
 
-    $cap = Get-WindowsCapability -Online -Name $_
+foreach ($capability in $Capabilities) {
 
-    if ($cap.State -eq 'Installed') {
-        Log "$_ already installed."
+    try {
+        $cap = Get-WindowsCapability -Online -Name $capability -ErrorAction Stop
+
+        if ($cap.State -eq 'Installed') {
+            Log "$capability already installed"
+            continue
+        }
+
+        Log "Installing $capability"
+
+        # Attempt install
+        Add-WindowsCapability -Online -Name $capability -ErrorAction Stop | Out-Null
+
+        # Validate installation
+        $capAfter = Get-WindowsCapability -Online -Name $capability
+
+        if ($capAfter.State -eq 'Installed') {
+            Log "$capability installation succeeded"
+        }
+        else {
+            Log "WARNING: $capability installation did not complete successfully (State: $($capAfter.State))"
+        }
     }
-    else {
-        Log "Installing $_ ..."
-        Add-WindowsCapability -Online -Name $_ | Out-Null
-        Log "$_ installation completed."
+    catch {
+        Log "ERROR installing $capability : $($_.Exception.Message)"
     }
 }
+
 
 Log "RSAT installation finished successfully."
