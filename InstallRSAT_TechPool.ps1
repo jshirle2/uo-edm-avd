@@ -4,8 +4,8 @@ $LogFile = "$LogPath\RSAT-install.log"
 function Log {
     param ($Message)
 
-    if (-not (test-path $LogFile)) {
-        New-Item -Path $LogPath -ItemType Directory
+    if (-not (Test-Path $LogPath)) {
+    New-Item -Path $LogPath -ItemType Directory -Force | Out-Null
     }
     
 
