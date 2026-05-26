@@ -30,7 +30,7 @@ if (Test-Path $LogFile) {
 # Nuget is needed for install-module
 if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
     Log "Installing NuGet provider because it is not already installed."
-    Install-PackageProvider -Name   -MinimumVersion 2.8.5.201 NuGet -Force
+    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
     Get-PackageProvider -Name NuGet | Out-Null
 }
 
