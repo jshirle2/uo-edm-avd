@@ -5,11 +5,6 @@ $LogFile = "$LogPath\PSModules-install.log"
 # Ensure TLS 1.2
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-
-# Trust PSGallery
-Set-PSRepository PSGallery -InstallationPolicy Trusted
-
-
 function Log {
     param ($Message)
 
@@ -29,6 +24,9 @@ if (Test-Path $LogFile) {
 
 Log "Installing NuGet provider."
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+
+# Trust PSGallery
+Set-PSRepository PSGallery -InstallationPolicy Trusted
 
 Log "Starting PowerShell module installation."
 $Modules = @(
@@ -51,10 +49,8 @@ $Modules = @(
 )
 
 $Modules | ForEach-Object {
-    if (-not (Get-InstalledModule -Name $_ -ErrorAction SilentlyContinue)) {
-        Log "Installing PowerShell module: $_"
-        Install-Module $_ -Scope AllUsers -Force -AllowClobber -Verbose
-    }
+    Log "Installing PowerShell module: $_"
+    Install-Module $_ -Scope AllUsers -Force -AllowClobber -Verbose
 } 
 
 Log "PowerShell module installation finished successfully."
