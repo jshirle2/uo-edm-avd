@@ -27,16 +27,10 @@ if (Test-Path $LogFile) {
     Remove-Item $LogFile -Force
 }
 
-# Nuget is needed for install-module
-if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
-    Log "Installing NuGet provider because it is not already installed."
-    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-    Get-PackageProvider -Name NuGet | Out-Null
-}
+Log "Installing NuGet provider."
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 
 Log "Starting PowerShell module installation."
-
-
 $Modules = @(
     'Microsoft.Graph.Authentication',
     'Microsoft.Graph.Users',
