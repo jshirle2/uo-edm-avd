@@ -21,13 +21,15 @@ if (Test-Path $LogFile) {
     Remove-Item $LogFile -Force
 }
 
-Log "Installing NuGet provider."
+Log "Install Powershell 7.6.2 from $url"
 
 
 If (-Not (Test-Path -Path $path)) {
     New-Item -ItemType File -Path $path -Force | Out-Null
 }
 
+Log "Downloading Powershell 7.6.2 from $url"
 Invoke-WebRequest -Uri $url -OutFile $path -Verbose
+Log "Installing Powershell 7.6.2"
 Start-Process msiexec.exe -wait -ArgumentList "/i $path /qn /norestart"
 Remove-Item $path -Force
