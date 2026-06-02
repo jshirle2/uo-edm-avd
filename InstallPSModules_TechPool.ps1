@@ -49,8 +49,10 @@ $Modules = @(
 )
 
 $Modules | ForEach-Object {
-    Log "Installing PowerShell module: $_"
+    Log "Installing PowerShell module: $_ for Powershell 5.1"
     Install-Module $_ -Scope AllUsers -Force -AllowClobber -Verbose
+    Log "Installing PowerShell module: $_ for Powershell 7.6.2"
+    pwsh -Command "Install-Module $_ -Scope AllUsers -Force -AllowClobber -Verbose"
 } 
 
 Log "PowerShell module installation finished successfully."
