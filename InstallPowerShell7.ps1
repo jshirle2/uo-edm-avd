@@ -33,3 +33,4 @@ Invoke-WebRequest -Uri $url -OutFile $path -Verbose
 Log "Installing Powershell 7.6.2"
 Start-Process msiexec.exe -wait -ArgumentList "/i $path /qn /norestart"
 Remove-Item $path -Force
+Log "Powershell 7.6.2 installation finished successfully."
