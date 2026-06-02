@@ -31,6 +31,6 @@ If (-Not (Test-Path -Path $path)) {
 Log "Downloading Powershell 7.6.2 from $url"
 Invoke-WebRequest -Uri $url -OutFile $path -Verbose
 Log "Installing Powershell 7.6.2"
-Start-Process msiexec.exe -wait -ArgumentList "/i $path /qn /norestart"
+Start-Process msiexec.exe -wait -ArgumentList "/i $path /qn /norestart ADD_PATH= 1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1" -Verbose
 Remove-Item $path -Force
 Log "Powershell 7.6.2 installation finished successfully."
