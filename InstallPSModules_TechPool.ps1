@@ -30,9 +30,8 @@ Set-PSRepository PSGallery -InstallationPolicy Trusted
 
 Log "Starting PowerShell module installation."
 $Modules = @(
-    'Microsoft.Graph.Authentication',
-    'Microsoft.Graph.Users',
-    'Microsoft.Graph.Groups',
+    'Microsoft.Graph',
+    'Microsoft.Graph.Intune',
     'Microsoft.Entra',
     'Az.Accounts',
     'Az.Compute',
